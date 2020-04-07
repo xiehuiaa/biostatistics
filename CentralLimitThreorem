@@ -1,0 +1,29 @@
+## Central Limit Threorem
+We look at the effect of the central limit theorem using simulation. The following gamma distribution is far away from the normal distribution.
+```{r}
+   x = seq(0.0001, 30, by = 0.01)
+   y = dgamma(x, shape=1.5,scale=5)
+   plot(x, y, type="l", col="red", lwd=2)
+   legend("topright", legend="Gamma(1.5, 5)", bty="n")
+```
+
+## When the sample size id sample, the sample mean is still far away from the normal distribution.
+
+```{r}
+  n = 5
+  x = c()
+  for(i in 1:1000){
+    x[i] = mean(rgamma(n, shape=1.5, scale=5))
+  }
+  data.frame(x) %>% ggplot(aes(sample=scale(x))) + geom_qq()# + geom_abline()
+```
+
+## when n = 20, normal approximation is better
+```{r}
+  n = 20
+  x = c()
+  for(i in 1:1000){
+    x[i] = mean(rgamma(n, shape=1.5, scale=5))
+  }
+  data.frame(x) %>% ggplot(aes(sample=scale(x))) + geom_qq() + geom_abline() 
+```
